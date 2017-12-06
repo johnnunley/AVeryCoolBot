@@ -1,0 +1,2 @@
+# AVeryCoolBot
+ai learning bot
