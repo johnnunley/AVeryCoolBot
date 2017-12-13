@@ -22,6 +22,6 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "result.h"
 
-typedef result_t (*myfunc)(int,int,int);
+typedef result_t (*action)(int,int,int);
 
 #endif
