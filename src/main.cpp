@@ -24,7 +24,7 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 #include <string>
 #include <sstream>
 
-std::string getCoefficient(int i) {
+std::string getCoefficient(double i) {
   if (i == 1)
     return "";
   std::stringstream s;
@@ -35,7 +35,7 @@ std::string getCoefficient(int i) {
   return s.str();
 }
 
-result_t testAction(int a, int b, int c) {
+score_t testAction(double a, double b, double c) {
   double sqrtTerm = std::pow(b,2) - (4*a*c);
   sqrtTerm = std::sqrt(sqrtTerm);
   double result1 = (0-b)+sqrtTerm;
@@ -43,12 +43,12 @@ result_t testAction(int a, int b, int c) {
   result1 /= (2*a);
   result2 /= (2*a);
   std::cout << getCoefficient(a) << "x^2 " << (b > 0 ? "+ " : "- ") << getCoefficient(b) << "x " << (c > 0 ? "+ " : "- ") << (c != 1 ? getCoefficient(c) : "1") << " = " << result1 << " or " << result2 << std::endl;
-  return NO_RESULT;
+  return result1;
 }
 
 int main(int argc, char **argv) {
   std::cout << "You are running AVCB version " << getVersion() << std::endl;
   action myAction = &testAction;
-  myAction(1,-6,9);
+  myAction(1.0,-6.0,9.0);
   return 0;
 }

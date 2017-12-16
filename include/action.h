@@ -20,8 +20,8 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef AVCB_ACTION
 #define AVCB_ACTION
 
-#include "result.h"
+#include "score.h"
 
-typedef result_t (*action)(int,int,int);
+typedef score_t (*action)(double,double,double);
 
 #endif

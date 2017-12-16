@@ -29,7 +29,7 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${LINK_FLAGS}")
 file(GLOB SOURCES "src/*")
 
 set(VERSION_MAJOR "ALPHA")
-set(VERSION_MINOR "1")
+set(VERSION_MINOR "2")
 
 # do configuration
 configure_file (

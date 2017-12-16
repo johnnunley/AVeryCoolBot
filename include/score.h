@@ -20,10 +20,6 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef AVCB_RESULT
 #define AVCB_RESULT
 
-typedef unsigned char result_t;
-#define NO_RESULT 0
-#define TRUE_RESULT 2
-#define FALSE_RESULT 1
-#define ERROR_RESULT 3
+typedef double score_t;
 
 #endif
