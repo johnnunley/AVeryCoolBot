@@ -17,13 +17,20 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#ifndef AVCB_ACTION
-#define AVCB_ACTION
+#ifndef AVCB_INPUT
+#define AVCB_INPUT
 
-#include "score.h"
 #include <vector>
 
-typedef score_t (*action)(double,double,double);
-typedef std::vector<action> ActionList;
+class Input {
+public:
+  double a;
+  double b;
+  double c;
+  Input();
+  Input(double,double,double);
+};
+
+typedef std::vector<Input> InputList;
 
 #endif

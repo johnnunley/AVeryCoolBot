@@ -18,7 +18,7 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "version.h"
-#include "action.h"
+#include "sequence.h"
 #include <iostream>
 #include <cmath>
 #include <string>
@@ -35,6 +35,7 @@ std::string getCoefficient(double i) {
   return s.str();
 }
 
+// this function is SUPPOSED to do the quadratic function, but it's broken. Fortunately, it's only a test case fo the action command.
 score_t testAction(double a, double b, double c) {
   double sqrtTerm = std::pow(b,2) - (4*a*c);
   sqrtTerm = std::sqrt(sqrtTerm);
@@ -48,7 +49,23 @@ score_t testAction(double a, double b, double c) {
 
 int main(int argc, char **argv) {
   std::cout << "You are running AVCB version " << getVersion() << std::endl;
-  action myAction = &testAction;
-  myAction(1.0,-6.0,9.0);
+
+  action action1 = &testAction;
+  action action2 = &testAction;
+  action action3 = &testAction; 
+  ActionList aList;
+  aList.push_back(action1);
+  aList.push_back(action2);
+  aList.push_back(action3);
+
+  InputList iList;
+  iList.push_back(Input(1,-6,9));
+  iList.push_back(Input(1,-2,1));
+  iList.push_back(Input(1,12,36));
+  
+  UnexecutedSequence sequence (aList,iList);
+  ExecutedSequence eSequence = sequence.execute();
+  std::cout << "Final score: " << eSequence.score << std::endl;
+
   return 0;
 }

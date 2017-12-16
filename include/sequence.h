@@ -17,13 +17,31 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#ifndef AVCB_ACTION
-#define AVCB_ACTION
+#ifndef AVCB_SEQUENCE
+#define AVCB_SEQUENCE
 
+#include "action.h"
 #include "score.h"
-#include <vector>
+#include "input.h"
 
-typedef score_t (*action)(double,double,double);
-typedef std::vector<action> ActionList;
+class ExecutedSequence;
+
+class UnexecutedSequence {
+public:
+  ActionList actions;
+  InputList inputs;
+  UnexecutedSequence(ActionList, InputList);
+  ExecutedSequence execute();
+};
+
+class ExecutedSequence {
+public:
+  ActionList actions;
+  InputList inputs;
+  score_t score;
+  ExecutedSequence(ActionList, InputList, score_t);
+  ExecutedSequence(UnexecutedSequence, score_t);
+  UnexecutedSequence getTemplate();
+};
 
 #endif
