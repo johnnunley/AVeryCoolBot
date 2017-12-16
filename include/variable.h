@@ -17,34 +17,18 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#ifndef AVCB_SEQUENCE
-#define AVCB_SEQUENCE
+#ifndef IRRELEVANT_VARIABLE
+#define IRRELEVANT_VARIABLE -1
 
-#include "action.h"
-#include "score.h"
-#include "input.h"
+#include "sequence.h"
 
-class Sequence {
+class Variable {
 public:
-  ActionList actions;
-  InputList inputs;
-  Sequence(ActionList, InputList);
-};
-
-class ExecutedSequence;
-
-class UnexecutedSequence : public Sequence {
-public:
-  UnexecutedSequence(ActionList, InputList);
-  ExecutedSequence execute();
-};
-
-class ExecutedSequence : public Sequence {
-public:
-  score_t score;
-  ExecutedSequence(ActionList, InputList, score_t);
-  ExecutedSequence(UnexecutedSequence, score_t);
-  UnexecutedSequence getTemplate();
+  bool isRelevant;
+  int sequenceIndex;
+  int inputIndex;
+  Variable(bool,int,int);
+  double getValue(Sequence);
 };
 
 #endif

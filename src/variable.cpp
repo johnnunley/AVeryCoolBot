@@ -17,34 +17,17 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#ifndef AVCB_SEQUENCE
-#define AVCB_SEQUENCE
+#include "variable.h"
+#include <cmath>
 
-#include "action.h"
-#include "score.h"
-#include "input.h"
+Variable::Variable(bool isr, int si, int ii) : isRelevant(isr), sequenceIndex(si), inputIndex(ii) { }
 
-class Sequence {
-public:
-  ActionList actions;
-  InputList inputs;
-  Sequence(ActionList, InputList);
-};
-
-class ExecutedSequence;
-
-class UnexecutedSequence : public Sequence {
-public:
-  UnexecutedSequence(ActionList, InputList);
-  ExecutedSequence execute();
-};
-
-class ExecutedSequence : public Sequence {
-public:
-  score_t score;
-  ExecutedSequence(ActionList, InputList, score_t);
-  ExecutedSequence(UnexecutedSequence, score_t);
-  UnexecutedSequence getTemplate();
-};
-
-#endif
+double Variable::getValue(Sequence s) {
+  Input i = s.inputs[sequenceIndex];
+  switch (inputIndex) {
+    case 0: return i.a;
+    case 1: return i.b;
+    case 2: return i.c;
+    default: return std::nan("");
+  }
+}

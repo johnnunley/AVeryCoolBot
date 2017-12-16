@@ -19,6 +19,7 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "version.h"
 #include "sequence.h"
+#include "variable.h"
 #include <iostream>
 #include <cmath>
 #include <string>
@@ -66,6 +67,9 @@ int main(int argc, char **argv) {
   UnexecutedSequence sequence (aList,iList);
   ExecutedSequence eSequence = sequence.execute();
   std::cout << "Final score: " << eSequence.score << std::endl;
+
+  Variable v (true,2,0);
+  std::cout << "The first term of the second equation is " << v.getValue(eSequence) << std::endl;
 
   return 0;
 }

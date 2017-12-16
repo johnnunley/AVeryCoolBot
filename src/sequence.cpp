@@ -19,11 +19,12 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "sequence.h"
 
-UnexecutedSequence::UnexecutedSequence(ActionList a, InputList i) : actions(a), inputs(i) {
+Sequence::Sequence(ActionList a, InputList i) : actions(a), inputs(i) { }
 
+UnexecutedSequence::UnexecutedSequence(ActionList a, InputList i) : Sequence(a,i) {
 }
 
-ExecutedSequence::ExecutedSequence(ActionList a, InputList i, score_t s) : actions(a), inputs(i), score(s) {
+ExecutedSequence::ExecutedSequence(ActionList a, InputList i, score_t s) : Sequence(a,i), score(s) {
 
 }
 
