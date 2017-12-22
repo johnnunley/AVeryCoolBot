@@ -17,16 +17,29 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#ifndef AVCB_BOT
-#define AVCB_BOT
+#include "varmanager.h"
 
-#include "variable.h"
+VariableManager::VariableManager(UnexecutedSequence u, Variable v, double di, double d2) : us(u), variable(v), bottom(d), top(0.0), lastScore(d2), direction(1) { }
 
-class AVCB {
-private:
-  UnexecutedSequence sequenceTemplate
-public:
-  AVCB(UnexecutedSequence);
-};
+bool VariableManager::isRelevant() { return variable.isRelevant; }
 
-#endif
+void VariableManager::updateVar() {
+  variable.setValue(us,top);
+}
+
+void VariableManager::step() {
+  int score;
+  if (stage == 0) {
+    if (direction == 1) {
+      top = bottom + direction; 
+      updateVar();
+      score = us.execute();
+      if (score > lastScore) {
+        stage = 1;
+      }
+      else direction = -1;
+    }
+    
+  }
+  lastScore = score;
+}

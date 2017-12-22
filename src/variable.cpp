@@ -31,3 +31,12 @@ double Variable::getValue(Sequence s) {
     default: return std::nan("");
   }
 }
+
+void Variable::setValue(Sequence s, double val) {
+  switch (inputIndex) {
+    case 0: s.inputs[sequenceIndex].a = val;
+    case 1: s.inputs[sequenceIndex].b = val;
+    case 2: s.inputs[sequenceIndex].c = val;
+  }
+}
+}

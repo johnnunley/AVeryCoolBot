@@ -29,6 +29,7 @@ public:
   int inputIndex;
   Variable(bool,int,int);
   double getValue(Sequence);
+  void setValue(Sequence,double);
 };
 
 #endif
