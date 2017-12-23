@@ -19,7 +19,7 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "varmanager.h"
 
-VariableManager::VariableManager(UnexecutedSequence u, Variable v, double di, double d2) : us(u), variable(v), bottom(d), top(0.0), lastScore(d2), direction(1) { }
+VariableManager::VariableManager(UnexecutedSequence u, Variable v, double d) : us(u), variable(v), bottom(d), top(0.0), lastScore(d), initialScore(d), direction(1) { }
 
 bool VariableManager::isRelevant() { return variable.isRelevant; }
 
@@ -30,16 +30,39 @@ void VariableManager::updateVar() {
 void VariableManager::step() {
   int score;
   if (stage == 0) {
-    if (direction == 1) {
-      top = bottom + direction; 
-      updateVar();
-      score = us.execute();
+    top = bottom + direction; 
+    updateVar();
+    score = us.execute().score;
+    if (direction == 1) {  
       if (score > lastScore) {
         stage = 1;
       }
       else direction = -1;
     }
-    
+    else {
+      if (score > lastScore) {
+        stage = 1;
+      }
+      else {
+        //if (score < initialScore && lastScore < initialScore) {
+          top = lastScore;
+          bottom = score;
+          stage = 2;
+        //}
+        //else {
+          
+        //} 
+      }
+    }   
+  }
+  else if (stage == 1) {
+    top = bottom + direction; 
+    updateVar();
+    score = us.execute().score;
+    if (score < lastScore) stage = 2;
+  }
+  else {
+    double lastTop = top;
   }
   lastScore = score;
 }

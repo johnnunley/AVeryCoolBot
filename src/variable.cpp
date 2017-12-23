@@ -39,4 +39,4 @@ void Variable::setValue(Sequence s, double val) {
     case 2: s.inputs[sequenceIndex].c = val;
   }
 }
-}
+

@@ -35,8 +35,9 @@ public:
   double bottom;
   double top;
   double lastScore;
+  double initialScore;
   int direction;
-  VariableManager(UnexcutedSequence,Variable,double,double);
+  VariableManager(UnexecutedSequence,Variable,double);
   bool isRelevant();
   void updateVar();
   void step(); 

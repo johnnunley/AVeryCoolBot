@@ -24,7 +24,7 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 
 class AVCB {
 private:
-  UnexecutedSequence sequenceTemplate
+  UnexecutedSequence sequenceTemplate;
 public:
   AVCB(UnexecutedSequence);
 };
