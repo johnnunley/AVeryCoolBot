@@ -22,8 +22,8 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 
 Variable::Variable(bool isr, int si, int ii) : isRelevant(isr), sequenceIndex(si), inputIndex(ii) { }
 
-double Variable::getValue(Sequence s) {
-  Input i = s.inputs[sequenceIndex];
+double Variable::getValue(Sequence *s) {
+  Input i = s->inputs[sequenceIndex];
   switch (inputIndex) {
     case 0: return i.a;
     case 1: return i.b;
@@ -32,11 +32,11 @@ double Variable::getValue(Sequence s) {
   }
 }
 
-void Variable::setValue(Sequence s, double val) {
+void Variable::setValue(Sequence *s, double val) {
   switch (inputIndex) {
-    case 0: s.inputs[sequenceIndex].a = val;
-    case 1: s.inputs[sequenceIndex].b = val;
-    case 2: s.inputs[sequenceIndex].c = val;
+    case 0: s->inputs[sequenceIndex].a = val;
+    case 1: s->inputs[sequenceIndex].b = val;
+    case 2: s->inputs[sequenceIndex].c = val;
   }
 }
 

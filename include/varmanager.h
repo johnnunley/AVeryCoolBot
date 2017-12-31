@@ -30,14 +30,14 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 class VariableManager {
 public:
   Variable variable;
-  UnexecutedSequence us;
+  UnexecutedSequence *us;
   int stage;
   double bottom;
   double top;
   double lastScore;
   double initialScore;
   int direction;
-  VariableManager(UnexecutedSequence,Variable,double);
+  VariableManager(UnexecutedSequence *,Variable,double);
   bool isRelevant();
   void updateVar();
   void step(); 

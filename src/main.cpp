@@ -20,6 +20,7 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 #include "version.h"
 #include "sequence.h"
 #include "variable.h"
+#include "varmanager.h"
 #include <iostream>
 #include <cmath>
 #include <string>
@@ -48,28 +49,33 @@ score_t testAction(double a, double b, double c) {
   return result1;
 }
 
+score_t testAction2(double a, double b, double c) {
+  return std::sqrt(a) + ((0-(std::pow(b,2))) + (4*b) + 1);
+}
+
 int main(int argc, char **argv) {
   std::cout << "You are running AVCB version " << getVersion() << std::endl;
 
-  action action1 = &testAction;
-  action action2 = &testAction;
-  action action3 = &testAction; 
+  action a = &testAction2;
   ActionList aList;
-  aList.push_back(action1);
-  aList.push_back(action2);
-  aList.push_back(action3);
-
+  aList.push_back(a);
   InputList iList;
-  iList.push_back(Input(1,-6,9));
-  iList.push_back(Input(1,-2,1));
-  iList.push_back(Input(1,12,36));
-  
+  iList.push_back(Input(5,5,0));
   UnexecutedSequence sequence (aList,iList);
-  ExecutedSequence eSequence = sequence.execute();
-  std::cout << "Final score: " << eSequence.score << std::endl;
+  UnexecutedSequence *sequencePointer = &sequence;
 
-  Variable v (true,2,0);
-  std::cout << "The first term of the second equation is " << v.getValue(eSequence) << std::endl;
+  score_t score = sequence.execute().score;
+  Variable v(true,0,1);
+  VariableManager vm(sequencePointer,v,score);
+ 
+  std::cout << "Initial Score: " << score << std::endl;
+  std::cout << "How many cycles: ";
+  int cycles;
+  std::cin >> cycles;
+  for (int i = 0; i < cycles; i++) {
+    vm.step();
+  }
+  std::cout << "After " << cycles << " turns: " << vm.lastScore << std::endl;
 
   return 0;
 }
