@@ -20,13 +20,22 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef AVCB_BOT
 #define AVCB_BOT
 
-#include "variable.h"
+#include "varmanager.h"
 
 class AVCB {
 private:
-  UnexecutedSequence sequenceTemplate;
+  UnexecutedSequence *sequenceTemplate;
+  std::vector<VariableManager> varmanagers;
+  int stepIndex;
+  int runIndex;
+  std::vector<double> varAdjustmentScores;
+ 
+  int stage;
+  std::vector<int> orderOfActions;
+  std::vector<int> shuffledOrder;
 public:
-  AVCB(UnexecutedSequence);
+  AVCB(UnexecutedSequence *,std::vector<bool>,std::vector<double>);
+  void step();
 };
 
 #endif

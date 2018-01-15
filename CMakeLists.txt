@@ -31,6 +31,8 @@ file(GLOB SOURCES "src/*")
 set(VERSION_MAJOR "ALPHA")
 set(VERSION_MINOR "2")
 
+option(RUN_CYCLE_COUNT "Number of cycles the bot runs to determine which option is most profitable. Must be greater than 0. Defaults to 5." 5)
+
 # do configuration
 configure_file (
   "include/AVCB_config.h.in"

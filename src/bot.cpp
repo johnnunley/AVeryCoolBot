@@ -18,6 +18,39 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "bot.h"
+#include "AVCB_config.h"
 
-AVCB::AVCB(UnexecutedSequence us) : sequenceTemplate(us) {
+AVCB::AVCB(UnexecutedSequence *us,vector<bool> relevancy,vector<double> baseline) : sequenceTemplate(us), stepIndex(0), stage(0) {
+  int actionIndex = 0;
+  int inputIndex = 0;
+  for (int i = 0; i < relevancy.size(); i++) {
+    bool b = relevancy[i];
+    double d = baseline[i];
+    Variable v (b,actionIndex,sequenceIndex);
+    if (v.isRelevant) {
+      varmanagers.add(VariableManager(us,v,d));
+    }
+    switch (inputIndex) {
+      case 2: inputIndex = 0; actionIndex++; break;
+      default: inputIndex++; break;
+    }
+  }
+}
+
+void AVCB::step() {
+  if (stage == 0) {
+    if (runIndex < varmanagers.size()) {
+      if (stepIndex < RUN_CYCLE_COUNT) {
+         
+        stepIndex++;  
+      }
+      else {
+        stepIndex = 0;
+        runIndex++;
+      } 
+    }
+    else {
+      stage = 1;
+    }
+  } 
 }

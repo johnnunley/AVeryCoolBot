@@ -23,4 +23,10 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 #define VERSION_MAJOR "@VERSION_MAJOR@"
 #define VERSION_MINOR "@VERSION_MINOR@"
 
+#if @RUN_CYCLE_COUNT@ > 0
+#define RUN_CYCLE_COUNT "@RUN_CYCLE_COUNT@"
+#else
+#define RUN_CYCLE_COUNT 5
+#endif
+
 #endif
