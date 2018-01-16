@@ -29,10 +29,14 @@ private:
   int stepIndex;
   int runIndex;
   std::vector<double> varAdjustmentScores;
+  std::vector<double> diffs;
  
   int stage;
   std::vector<int> orderOfActions;
   std::vector<int> shuffledOrder;
+
+  double curScore;
+  double lastScore;
 public:
   AVCB(UnexecutedSequence *,std::vector<bool>,std::vector<double>);
   void step();
