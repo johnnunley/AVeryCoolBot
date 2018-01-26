@@ -23,15 +23,15 @@ along with AVCB.  If not, see <http://www.gnu.org/licenses/>.
 #include "bot.h"
 #include "AVCB_config.h"
 
-AVCB::AVCB(UnexecutedSequence *us,vector<bool> relevancy,vector<double> baseline) : sequenceTemplate(us), stepIndex(0), stage(0) {
+AVCB::AVCB(UnexecutedSequence *us,std::vector<bool> relevancy,std::vector<double> baseline) : sequenceTemplate(us), stepIndex(0), stage(0) {
   int actionIndex = 0;
   int inputIndex = 0;
   for (int i = 0; i < relevancy.size(); i++) {
     bool b = relevancy[i];
     double d = baseline[i];
-    Variable v (b,actionIndex,sequenceIndex);
+    Variable v (b,actionIndex,inputIndex);
     if (v.isRelevant) {
-      varmanagers.add(VariableManager(us,v,d));
+      varmanagers.push_back(VariableManager(us,v,d));
     }
     switch (inputIndex) {
       case 2: inputIndex = 0; actionIndex++; break;
@@ -46,11 +46,11 @@ double average(std::vector<double> terms) {
   return sum / terms.size();
 }
 
-typedef std::multimap<int,double> vmdmap;
+typedef std::map<int,double> vmdmap;
 
 vmdmap createMap(std::vector<int> v1, std::vector<double> v2) {
   vmdmap val;
-  for (int i = 0; i < v1.size; i++) {
+  for (int i = 0; i < v1.size(); i++) {
     val[v1[i]] = v2[i];
   }
   return val;
@@ -68,8 +68,14 @@ bool operator<(intDoublePair const & a, intDoublePair const & b)
     return a.d < b.d;
 }
 
+std::vector<int> getRange(int bottom, int top) {
+  std::vector<int> vec;
+  for (int i = bottom; i < top; i++) vec.push_back(i);
+  return vec;
+}
+
 vmdmap sortMapByValue(vmdmap map) {
-  vector<intDoublePair> idps;   
+  std::vector<intDoublePair> idps;   
   for (std::pair<int,double> pair : map) {
     idps.push_back(intDoublePair(pair.T1, pair.T2));
   }
@@ -78,11 +84,11 @@ vmdmap sortMapByValue(vmdmap map) {
   for (intDoublePair idp : idps) {
     map[idp.i] = idp.d;
   }
-  return *map;
+  return map;
 }
 
-vector<int> getVMIndexes(vmdmap map) {
-  vector<int> indexes;
+std::vector<int> getVMIndexes(vmdmap map) {
+  std::vector<int> indexes;
   for (std::pair<int,double> pair : map) indexes.push_back(pair.T1);
   return indexes;
 }
@@ -92,7 +98,7 @@ void AVCB::step() {
     if (runIndex < varmanagers.size()) {
       if (stepIndex < RUN_CYCLE_COUNT) {
         lastScore = curScore;
-        curScore = varmanagers[runindex].step().score; 
+        curScore = varmanagers[runIndex].step().score; 
         diffs.push_back(curScore - lastScore);
         stepIndex++; 
       }
@@ -106,7 +112,7 @@ void AVCB::step() {
       } 
     }
     else {
-      vmdmap map = createMap(varmanagers,varAdjustmentScores); 
+      vmdmap map = createMap(getRange(0,varmanagers.size() - 1),varAdjustmentScores); 
       map = sortMapByValue(map);   
       orderOfActions = getVMIndexes(map);
       stage = 1;
@@ -116,11 +122,11 @@ void AVCB::step() {
   else {
     if (runIndex < varmanagers.size()) {
       runIndex++;
-      varmanagers[orderOfActions[runIndex]].execute();
+      varmanagers[orderOfActions[runIndex]].step();
     }
     else {
       runIndex = 1;
-      varmanagers[orderOfActions[0]].execute();
+      varmanagers[orderOfActions[0]].step();
     }
   }
 }
