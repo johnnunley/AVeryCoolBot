@@ -61,7 +61,7 @@ class intDoublePair {
     int i;
     double d;
     intDoublePair(int n, double o) : i(n), d(o) { }
-}
+};
 
 bool operator<(intDoublePair const & a, intDoublePair const & b)
 {
@@ -77,7 +77,7 @@ std::vector<int> getRange(int bottom, int top) {
 vmdmap sortMapByValue(vmdmap map) {
   std::vector<intDoublePair> idps;   
   for (std::pair<int,double> pair : map) {
-    idps.push_back(intDoublePair(pair.T1, pair.T2));
+    idps.push_back(intDoublePair(pair.first, pair.second));
   }
   std::sort(idps.begin(),idps.end()); 
   map.clear();
@@ -89,7 +89,7 @@ vmdmap sortMapByValue(vmdmap map) {
 
 std::vector<int> getVMIndexes(vmdmap map) {
   std::vector<int> indexes;
-  for (std::pair<int,double> pair : map) indexes.push_back(pair.T1);
+  for (std::pair<int,double> pair : map) indexes.push_back(pair.first);
   return indexes;
 }
 
@@ -98,7 +98,7 @@ void AVCB::step() {
     if (runIndex < varmanagers.size()) {
       if (stepIndex < RUN_CYCLE_COUNT) {
         lastScore = curScore;
-        curScore = varmanagers[runIndex].step().score; 
+        curScore = varmanagers[runIndex].step(); 
         diffs.push_back(curScore - lastScore);
         stepIndex++; 
       }

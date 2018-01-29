@@ -40,7 +40,7 @@ public:
   VariableManager(UnexecutedSequence *,Variable,double);
   bool isRelevant();
   void updateVar();
-  void step(); 
+  score_t step(); 
 };
 
 #endif

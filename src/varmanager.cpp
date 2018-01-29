@@ -33,7 +33,7 @@ void VariableManager::updateVar() {
 
 
 
-void VariableManager::step() {
+score_t VariableManager::step() {
   score_t score;
   if (stage == 0) {
     //cout << "Stage 0, Direction: " << direction << endl;
@@ -97,4 +97,5 @@ void VariableManager::step() {
      //cout << "Top: " << top << ", Bottom: " << bottom endl;
   }
   lastScore = score;
+  return score;
 }
